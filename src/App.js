@@ -32,7 +32,7 @@ class App extends React.Component {
     })
 
     try {
-      const response = await axios.get(`http://99.79.93.113:8080/api/recipes/angelachen`)
+      const response = await axios.get(`http://99.79.93.113:8080/recipes/angelachen`)
       this.setState({
         recipes: response.data,
         isLoading: false
