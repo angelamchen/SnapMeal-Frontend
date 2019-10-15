@@ -32,7 +32,7 @@ class App extends React.Component {
     })
 
     try {
-      const response = await axios.get(`http://192.168.1.121:8080/recipes/angelachen`)
+      const response = await axios.get(`http://${window.location.hostname}:8080/api/recipes/angelachen`)
       this.setState({
         recipes: response.data,
         isLoading: false
@@ -45,7 +45,7 @@ class App extends React.Component {
   }
 
   fetchUserIngredients = async () => {
-    const response = await axios.get(`http://192.168.1.121:8080/ingredients/UserIngredient?userId=angelachen`)
+    const response = await axios.get(`http://${window.location.hostname}:8080/api/ingredients/UserIngredient?userId=angelachen`)
 
     this.setState({
       currentIngredients: response.data
@@ -53,17 +53,23 @@ class App extends React.Component {
   }
 
   addIngredientsFromImage = async (imgUpload) => {
-    await axios.post(`http://192.168.1.121:8080/ingredients/angelachen`, { imageString: imgUpload })
+    this.setState({
+      isLoading: true
+    })
+    await axios.post(`http://${window.location.hostname}:8080/api/ingredients/angelachen`, { imageString: imgUpload })
+    this.setState({
+      isLoading: false
+    })
     this.fetchUserIngredients()
   }
 
   addIngredientsFromText = async (ingredientName) => {
-    await axios.post(`http://192.168.1.121:8080/ingredients/${ingredientName}/angelachen`)
+    await axios.post(`http://${window.location.hostname}:8080/api/ingredients/${ingredientName}/angelachen`)
     this.fetchUserIngredients()
   }
 
   deleteIngredients = async (ingredientName) => {
-    await axios.delete(`http://192.168.1.121:8080/ingredients/${ingredientName}/angelachen`)
+    await axios.delete(`http://${window.location.hostname}:8080/api/ingredients/${ingredientName}/angelachen`)
     this.fetchUserIngredients()
   }
 
